@@ -1,5 +1,6 @@
 
 const API_URL = 'https://kbzhv-miniapp-backend.vercel.app';
+const userId = 'user1';  // тимчасово фіксовано
 
 function updateWaterRecommendation() {
     const weight = +document.getElementById('weight').value;
@@ -73,6 +74,11 @@ function setupEventListeners() {
     setupToggle('addButton', 'addMenu');
     setupToggle('manual', 'manualForm');
 
+    document.getElementById('byDay').addEventListener('click', () => {
+        const today = new Date().toISOString().split('T')[0];
+        loadHistoryView(today, today);
+    });
+
     document.getElementById('waterDrankInput').addEventListener('input', () => {
         const val = +document.getElementById('waterDrankInput').value;
         localStorage.setItem('waterDrank', val);
@@ -100,9 +106,7 @@ function setupEventListeners() {
             carbs: carbs * k
         };
 
-        const userId = 'user1';
         const today = new Date().toISOString().split('T')[0];
-
         addKbzhvEntry({ ...entry, userId, date: today });
         updateTotals(entry);
         updateProgressBars();
@@ -181,4 +185,35 @@ function updateTotals(entry) {
     prots.textContent = (+prots.textContent + entry.proteins).toFixed(1);
     fats.textContent = (+fats.textContent + entry.fats).toFixed(1);
     carbs.textContent = (+carbs.textContent + entry.carbs).toFixed(1);
+}
+
+async function fetchKbzhvEntries(fromDate, toDate) {
+    const url = `${API_URL}/api/kbzhv?userId=${userId}&fromDate=${fromDate}&toDate=${toDate}`;
+    const res = await fetch(url);
+    return res.json();
+}
+
+async function loadHistoryView(fromDate, toDate) {
+    const data = await fetchKbzhvEntries(fromDate, toDate);
+    renderHistory(data);
+}
+
+function renderHistory(entries) {
+    const container = document.getElementById('history-view');
+    container.innerHTML = '<h3>Історія КБЖВ</h3>';
+    if (entries.length === 0) {
+        container.innerHTML += '<p>Немає записів за вибраний день.</p>';
+        return;
+    }
+    entries.forEach(entry => {
+        container.innerHTML += `
+            <div class="summary-item">
+                <strong>${entry.date}</strong>: 
+                Калорії: ${entry.calories}, 
+                Б: ${entry.proteins}, 
+                Ж: ${entry.fats}, 
+                В: ${entry.carbs}
+            </div>
+        `;
+    });
 }
