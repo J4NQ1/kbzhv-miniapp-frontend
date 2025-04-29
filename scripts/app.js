@@ -1,6 +1,17 @@
 
 const API_URL = 'https://kbzhv-miniapp-backend.vercel.app';
 
+function updateWaterRecommendation() {
+    const weight = +document.getElementById('weight').value;
+    const el = document.getElementById('water-recommendation');
+    if (weight) {
+        const ml = weight * 40;
+        el.textContent = `Рекомендація: ${ml} мл води/день`;
+    } else {
+        el.textContent = '';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadUserData();
     updateDate();
@@ -8,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgressBars();
 });
 
-// === Дата та ім'я ===
 function updateDate() {
     const date = new Date().toLocaleDateString('uk-UA');
     document.getElementById('date').textContent = `Сьогодні: ${date}`;
@@ -22,7 +32,6 @@ function updateUserShortInfo() {
     document.getElementById('userShortInfo').textContent = firstName || lastName ? `${firstName} ${lastName}` : '';
 }
 
-// === Збереження даних ===
 function saveUserData() {
     const user = {
         firstName: document.getElementById('firstName').value,
@@ -54,27 +63,15 @@ function loadUserData() {
     document.getElementById('stepsDoneInput').value = localStorage.getItem('stepsDone') || '';
 }
 
-// === Події ===
 function setupEventListeners() {
     document.querySelectorAll('#settings input').forEach(input =>
         input.addEventListener('change', saveUserData)
     );
 
-    document.getElementById('toggleSettings').addEventListener('click', () => {
-        document.getElementById('settings').classList.toggle('hidden');
-    });
-
-    document.getElementById('toggleStats').addEventListener('click', () => {
-        document.getElementById('history-buttons').classList.toggle('hidden');
-    });
-
-    document.getElementById('addButton').addEventListener('click', () => {
-        document.getElementById('addMenu').classList.toggle('hidden');
-    });
-
-    document.getElementById('manual').addEventListener('click', () => {
-        document.getElementById('manualForm').classList.toggle('hidden');
-    });
+    setupToggle('toggleSettings', 'settings');
+    setupToggle('toggleStats', 'history-buttons');
+    setupToggle('addButton', 'addMenu');
+    setupToggle('manual', 'manualForm');
 
     document.getElementById('waterDrankInput').addEventListener('input', () => {
         const val = +document.getElementById('waterDrankInput').value;
@@ -113,12 +110,22 @@ function setupEventListeners() {
     });
 }
 
+function setupToggle(buttonId, targetId) {
+    const btn = document.getElementById(buttonId);
+    const target = document.getElementById(targetId);
+    if (btn && target) {
+        btn.addEventListener('click', () => {
+            target.classList.toggle('revealed');
+            target.classList.toggle('hidden');
+        });
+    }
+}
+
 function clearManualForm() {
     ['manualCalories', 'manualProteins', 'manualFats', 'manualCarbs', 'manualGrams']
         .forEach(id => document.getElementById(id).value = '');
 }
 
-// === Прогрес-бари ===
 function updateProgressBars() {
     const calorieGoal = +document.getElementById('calorieGoal').value;
     const totalCalories = +document.getElementById('totalCalories').textContent;
@@ -156,7 +163,6 @@ function updateBar(id, percent, type) {
     }
 }
 
-// === КБЖВ додавання ===
 async function addKbzhvEntry(data) {
     await fetch(`${API_URL}/api/kbzhv`, {
         method: 'POST',
@@ -165,7 +171,6 @@ async function addKbzhvEntry(data) {
     });
 }
 
-// === КБЖВ підсумок ===
 function updateTotals(entry) {
     const cals = document.getElementById('totalCalories');
     const prots = document.getElementById('totalProteins');
