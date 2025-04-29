@@ -78,3 +78,8 @@ button:hover {
         padding: 10px;
     }
 }
+
+.block input {
+    box-sizing: border-box;
+    width: 100%;
+}
