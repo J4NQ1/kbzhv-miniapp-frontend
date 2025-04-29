@@ -11,26 +11,24 @@
         <header>
             <h1>КБЖВ Калькулятор</h1>
             <div id="date"></div>
-            <div id="water-recommendation"></div>
+            <div id="userShortInfo"></div>
         </header>
 
-        <section id="user-info">
-            <div class="row">
-                <input type="text" id="firstName" placeholder="Ім'я">
-                <input type="text" id="lastName" placeholder="Прізвище">
-            </div>
-            <button id="toggleNorms">Змінити норми</button>
-            <div id="normInputs" class="hidden">
-                <input type="number" id="height" placeholder="Ріст (см)">
-                <input type="number" id="weight" placeholder="Вага (кг)">
-                <input type="number" id="calorieGoal" placeholder="Норма калорій">
-                <input type="number" id="stepGoal" placeholder="Норма кроків">
-            </div>
-            <input type="number" id="stepsDoneInput" placeholder="Пройдено кроків за день">
-            <input type="number" id="waterDrankInput" placeholder="Випита вода (мл)">
-        </section>
+        <button id="toggleSettings">⚙️</button>
+        <div id="settings" class="hidden">
+            <input type="text" id="firstName" placeholder="Ім'я">
+            <input type="text" id="lastName" placeholder="Прізвище">
+            <input type="number" id="height" placeholder="Ріст (см)">
+            <input type="number" id="weight" placeholder="Вага (кг)">
+            <input type="number" id="calorieGoal" placeholder="Норма калорій">
+            <input type="number" id="stepGoal" placeholder="Норма кроків">
+        </div>
 
-        <section id="progress-bars">
+        <div class="block">
+            <div id="water-recommendation"></div>
+            <input type="number" id="waterDrankInput" placeholder="Випита вода (мл)">
+            <input type="number" id="stepsDoneInput" placeholder="Пройдено кроків за день">
+
             <div class="progress-container">
                 <label>Калорії</label>
                 <div class="progress-bar" id="calorieProgress"><div></div></div>
@@ -43,7 +41,7 @@
                 <label>Кроки</label>
                 <div class="progress-bar" id="stepsProgress"><div></div></div>
             </div>
-        </section>
+        </div>
 
         <section id="add-section">
             <button id="addButton">Додати</button>
@@ -65,7 +63,7 @@
             </div>
         </section>
 
-        <section id="daily-summary">
+        <section id="daily-summary" class="block">
             <h2>КБЖВ за день</h2>
             <div class="summary-item">Калорії: <span id="totalCalories">0</span></div>
             <div class="summary-item">Білки: <span id="totalProteins">0</span></div>
@@ -73,7 +71,8 @@
             <div class="summary-item">Вуглеводи: <span id="totalCarbs">0</span></div>
         </section>
 
-        <section id="history-buttons">
+        <button id="toggleStats">📊 Статистика</button>
+        <section id="history-buttons" class="hidden">
             <button id="byDay">По днях</button>
             <button id="byWeek">По тижнях</button>
             <button id="byMonth">За місяць</button>
