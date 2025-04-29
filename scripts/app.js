@@ -1,7 +1,6 @@
 
 const API_URL = 'https://kbzhv-miniapp-backend.vercel.app';
 
-// Завантаження після DOM
 document.addEventListener('DOMContentLoaded', () => {
     loadUserData();
     updateDate();
@@ -9,22 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgressBars();
 });
 
-// Дата і рекомендація води
+// === Дата та ім'я ===
 function updateDate() {
     const date = new Date().toLocaleDateString('uk-UA');
     document.getElementById('date').textContent = `Сьогодні: ${date}`;
     updateWaterRecommendation();
+    updateUserShortInfo();
 }
 
-function updateWaterRecommendation() {
-    const weight = +document.getElementById('weight').value;
-    if (weight) {
-        const waterMl = weight * 40;
-        document.getElementById('water-recommendation').textContent = `Рекомендація: ${waterMl} мл води/день`;
-    }
+function updateUserShortInfo() {
+    const firstName = document.getElementById('firstName').value || '';
+    const lastName = document.getElementById('lastName').value || '';
+    document.getElementById('userShortInfo').textContent = firstName || lastName ? `${firstName} ${lastName}` : '';
 }
 
-// Збереження користувача
+// === Збереження даних ===
 function saveUserData() {
     const user = {
         firstName: document.getElementById('firstName').value,
@@ -36,6 +34,7 @@ function saveUserData() {
     };
     localStorage.setItem('userData', JSON.stringify(user));
     updateWaterRecommendation();
+    updateUserShortInfo();
     updateProgressBars();
 }
 
@@ -48,31 +47,33 @@ function loadUserData() {
         document.getElementById('weight').value = data.weight || '';
         document.getElementById('calorieGoal').value = data.calorieGoal || '';
         document.getElementById('stepGoal').value = data.stepGoal || '';
+        updateUserShortInfo();
         updateWaterRecommendation();
     }
     document.getElementById('waterDrankInput').value = localStorage.getItem('waterDrank') || '';
     document.getElementById('stepsDoneInput').value = localStorage.getItem('stepsDone') || '';
 }
 
-// Обробка подій
+// === Події ===
 function setupEventListeners() {
-    document.querySelectorAll('#user-info input').forEach(input =>
+    document.querySelectorAll('#settings input').forEach(input =>
         input.addEventListener('change', saveUserData)
     );
 
-    document.getElementById('toggleNorms').addEventListener('click', () => {
-        const block = document.getElementById('normInputs');
-        block.classList.toggle('hidden');
+    document.getElementById('toggleSettings').addEventListener('click', () => {
+        document.getElementById('settings').classList.toggle('hidden');
+    });
+
+    document.getElementById('toggleStats').addEventListener('click', () => {
+        document.getElementById('history-buttons').classList.toggle('hidden');
     });
 
     document.getElementById('addButton').addEventListener('click', () => {
-        const menu = document.getElementById('addMenu');
-        menu.classList.toggle('hidden');
+        document.getElementById('addMenu').classList.toggle('hidden');
     });
 
     document.getElementById('manual').addEventListener('click', () => {
-        const form = document.getElementById('manualForm');
-        form.classList.toggle('hidden');
+        document.getElementById('manualForm').classList.toggle('hidden');
     });
 
     document.getElementById('waterDrankInput').addEventListener('input', () => {
@@ -99,7 +100,7 @@ function setupEventListeners() {
             calories: cal * k,
             proteins: prot * k,
             fats: fats * k,
-            carbs: carbs * k,
+            carbs: carbs * k
         };
 
         const userId = 'user1';
@@ -113,23 +114,11 @@ function setupEventListeners() {
 }
 
 function clearManualForm() {
-    document.getElementById('manualCalories').value = '';
-    document.getElementById('manualProteins').value = '';
-    document.getElementById('manualFats').value = '';
-    document.getElementById('manualCarbs').value = '';
-    document.getElementById('manualGrams').value = '';
+    ['manualCalories', 'manualProteins', 'manualFats', 'manualCarbs', 'manualGrams']
+        .forEach(id => document.getElementById(id).value = '');
 }
 
-// Додавання КБЖВ у бекенд
-async function addKbzhvEntry(data) {
-    await fetch(`${API_URL}/api/kbzhv`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-}
-
-// Оновлення прогрес-барів
+// === Прогрес-бари ===
 function updateProgressBars() {
     const calorieGoal = +document.getElementById('calorieGoal').value;
     const totalCalories = +document.getElementById('totalCalories').textContent;
@@ -167,7 +156,16 @@ function updateBar(id, percent, type) {
     }
 }
 
-// Підсумок КБЖВ на день (локально)
+// === КБЖВ додавання ===
+async function addKbzhvEntry(data) {
+    await fetch(`${API_URL}/api/kbzhv`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+}
+
+// === КБЖВ підсумок ===
 function updateTotals(entry) {
     const cals = document.getElementById('totalCalories');
     const prots = document.getElementById('totalProteins');
