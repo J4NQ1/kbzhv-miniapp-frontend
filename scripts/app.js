@@ -172,3 +172,19 @@ function setupTestInputs() {
     document.body.appendChild(waterBtn);
     document.body.appendChild(stepsBtn);
 }
+
+
+function setupEventListeners() {
+    document.querySelectorAll('#user-info input').forEach(input =>
+        input.addEventListener('change', saveUserData)
+    );
+
+    document.getElementById('waterDrankInput').addEventListener('input', () => {
+        const val = +document.getElementById('waterDrankInput').value;
+        localStorage.setItem('waterDrank', val);
+        updateProgressBars();
+    });
+
+    document.getElementById('addButton').addEventListener('click', () => {
+        document.getElementById('addMenu').classList.toggle('hidden');
+    });
