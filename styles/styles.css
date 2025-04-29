@@ -35,7 +35,13 @@ button:hover {
     background: #555;
 }
 .hidden {
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.revealed {
+    max-height: 1000px;
+    padding-top: 10px;
 }
 .block {
     background: #1a1a1a;
