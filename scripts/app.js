@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadUserData();
     updateDate();
     setupEventListeners();
+    setupTestInputs();        // <== кнопки тесту води/кроків
+    updateProgressBars();     // <== оновлення прогрес-барів
 });
 
 // === ДАТА І ВОДА ===
@@ -109,4 +111,64 @@ function setupEventListeners() {
         addProductToBackend({ name, calories, proteins, fats, carbs });
         alert('Продукт додано!');
     });
+}
+
+function updateProgressBars() {
+    const calorieGoal = +document.getElementById('calorieGoal').value;
+    const totalCalories = +document.getElementById('totalCalories').textContent;
+    const caloriePercent = Math.min((totalCalories / calorieGoal) * 100, 100);
+    updateBar('calorieProgress', caloriePercent, 'calories');
+
+    const weight = +document.getElementById('weight').value;
+    const waterGoal = weight * 40;
+    const waterDrank = +localStorage.getItem('waterDrank') || 0;
+    const waterPercent = Math.min((waterDrank / waterGoal) * 100, 100);
+    updateBar('waterProgress', waterPercent, 'water');
+
+    const stepGoal = +document.getElementById('stepGoal').value;
+    const stepsDone = +localStorage.getItem('stepsDone') || 0;
+    const stepsPercent = Math.min((stepsDone / stepGoal) * 100, 100);
+    updateBar('stepsProgress', stepsPercent, 'steps');
+}
+
+function updateBar(id, percent, type) {
+    const bar = document.querySelector(`#${id} div`);
+    bar.style.width = percent + '%';
+
+    if (type === 'calories') {
+        if (percent < 40) bar.style.background = 'red';
+        else if (percent < 80) bar.style.background = 'orange';
+        else bar.style.background = 'green';
+    }
+
+    if (type === 'water') {
+        bar.style.background = '#007bff';
+    }
+
+    if (type === 'steps') {
+        bar.style.background = 'limegreen';
+    }
+}
+
+function setupTestInputs() {
+    const waterBtn = document.createElement('button');
+    waterBtn.textContent = 'Додати 250мл води';
+    waterBtn.onclick = () => {
+        let water = +localStorage.getItem('waterDrank') || 0;
+        water += 250;
+        localStorage.setItem('waterDrank', water);
+        updateProgressBars();
+    };
+
+    const stepsBtn = document.createElement('button');
+    stepsBtn.textContent = 'Додати 500 кроків';
+    stepsBtn.onclick = () => {
+        let steps = +localStorage.getItem('stepsDone') || 0;
+        steps += 500;
+        localStorage.setItem('stepsDone', steps);
+        updateProgressBars();
+    };
+
+    document.body.appendChild(waterBtn);
+    document.body.appendChild(stepsBtn);
 }
