@@ -13,15 +13,23 @@
             <div id="date"></div>
             <div id="water-recommendation"></div>
         </header>
+
         <section id="user-info">
-            <input type="text" id="firstName" placeholder="Ім'я">
-            <input type="text" id="lastName" placeholder="Прізвище">
-            <input type="number" id="height" placeholder="Ріст (см)">
-            <input type="number" id="weight" placeholder="Вага (кг)">
-            <input type="number" id="calorieGoal" placeholder="Норма калорій">
-            <input type="number" id="stepGoal" placeholder="Норма кроків">
+            <div class="row">
+                <input type="text" id="firstName" placeholder="Ім'я">
+                <input type="text" id="lastName" placeholder="Прізвище">
+            </div>
+            <button id="toggleNorms">Змінити норми</button>
+            <div id="normInputs" class="hidden">
+                <input type="number" id="height" placeholder="Ріст (см)">
+                <input type="number" id="weight" placeholder="Вага (кг)">
+                <input type="number" id="calorieGoal" placeholder="Норма калорій">
+                <input type="number" id="stepGoal" placeholder="Норма кроків">
+            </div>
+            <input type="number" id="stepsDoneInput" placeholder="Пройдено кроків за день">
             <input type="number" id="waterDrankInput" placeholder="Випита вода (мл)">
         </section>
+
         <section id="progress-bars">
             <div class="progress-container">
                 <label>Калорії</label>
@@ -36,6 +44,7 @@
                 <div class="progress-bar" id="stepsProgress"><div></div></div>
             </div>
         </section>
+
         <section id="add-section">
             <button id="addButton">Додати</button>
             <div id="addMenu" class="hidden">
@@ -45,7 +54,17 @@
                 <button id="manual">Додати вручну</button>
                 <button id="newProduct">Додати новий продукт</button>
             </div>
+
+            <div id="manualForm" class="hidden">
+                <input type="number" id="manualCalories" placeholder="Калорії на 100г">
+                <input type="number" id="manualProteins" placeholder="Білки на 100г">
+                <input type="number" id="manualFats" placeholder="Жири на 100г">
+                <input type="number" id="manualCarbs" placeholder="Вуглеводи на 100г">
+                <input type="number" id="manualGrams" placeholder="Грами">
+                <button id="submitManual">ОКЕЙ</button>
+            </div>
         </section>
+
         <section id="daily-summary">
             <h2>КБЖВ за день</h2>
             <div class="summary-item">Калорії: <span id="totalCalories">0</span></div>
@@ -53,6 +72,7 @@
             <div class="summary-item">Жири: <span id="totalFats">0</span></div>
             <div class="summary-item">Вуглеводи: <span id="totalCarbs">0</span></div>
         </section>
+
         <section id="history-buttons">
             <button id="byDay">По днях</button>
             <button id="byWeek">По тижнях</button>

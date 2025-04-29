@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -20,7 +21,7 @@ header h1 {
     color: #bbb;
     margin-bottom: 10px;
 }
-#user-info input {
+input, button {
     width: 100%;
     margin: 5px 0;
     padding: 10px;
@@ -28,6 +29,20 @@ header h1 {
     border: 1px solid #333;
     color: #fff;
     border-radius: 8px;
+    font-size: 16px;
+}
+.row {
+    display: flex;
+    gap: 10px;
+}
+.row input {
+    width: 100%;
+}
+button:hover {
+    background: #555;
+}
+.hidden {
+    display: none;
 }
 .progress-container {
     margin: 15px 0;
@@ -35,7 +50,6 @@ header h1 {
 .progress-container label {
     display: block;
     margin-bottom: 5px;
-    font-size: 16px;
 }
 .progress-bar {
     background: #333;
@@ -45,40 +59,17 @@ header h1 {
 }
 .progress-bar div {
     height: 100%;
-    background: red;
-    width: 0;
+    width: 0%;
     transition: width 0.5s, background-color 0.5s;
 }
 .progress-bar.blue div {
-    background: #007bff;
-}
-#addButton, #addMenu button, #history-buttons button {
-    width: 100%;
-    margin: 5px 0;
-    padding: 10px;
-    background: #333;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#addButton:hover, #addMenu button:hover, #history-buttons button:hover {
-    background: #555;
-}
-#addMenu.hidden {
-    display: none;
+    background-color: #007bff;
 }
 .summary-item {
     margin: 8px 0;
-    font-size: 16px;
 }
 @media (max-width: 480px) {
     #app {
         padding: 10px;
-    }
-    header h1 {
-        font-size: 20px;
     }
 }
