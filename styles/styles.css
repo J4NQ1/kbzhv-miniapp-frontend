@@ -10,3 +10,7 @@ button:hover { background: #333; }
 .progress-bar div { height: 100%; width: 0%; transition: width 0.5s; }
 .progress-bar.blue div { background: #007bff; }
 .product-item { background: #2a2a2a; margin: 10px 0; padding: 10px; border-radius: 6px; }
+input {
+  width: 100%;
+  box-sizing: border-box; /* ⬅️ ВИПРАВЛЯЄ ВИЛАЗІННЯ */
+}
