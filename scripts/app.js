@@ -1,10 +1,10 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupEventListeners();
-  loadUserData();
-  updateDate();
-  updateProgressBars();
+document.getElementById('fromList').addEventListener('click', () => {
+  const el = document.getElementById('productListView');
+  el.classList.toggle('hidden');
+  loadProductList(); // Показати весь список
 });
+
 
 function setupEventListeners() {
   setupToggle('toggleSettings', 'settings');
