@@ -58,3 +58,10 @@ document.getElementById('fromList').addEventListener('click', () => {
   el.classList.toggle('hidden');
   loadProductList();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateDate();          // оновлення дати
+  loadUserData();        // підвантаження з localStorage
+  setupEventListeners(); // ⬅️ ЦЕ ГОЛОВНЕ
+  updateProgressBars();  // оновити індикатори
+});
