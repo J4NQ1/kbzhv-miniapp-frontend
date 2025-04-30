@@ -87,3 +87,39 @@ function updateTotals(entry) {
   t('totalFats').textContent = (+t('totalFats').textContent + entry.fats).toFixed(1);
   t('totalCarbs').textContent = (+t('totalCarbs').textContent + entry.carbs).toFixed(1);
 }
+
+async function loadProductList(query = '') {
+  const container = document.getElementById('productListView');
+  container.innerHTML = ''; // Очистити
+
+  // Поле пошуку
+  const search = document.createElement('input');
+  search.type = 'text';
+  search.placeholder = 'Пошук продукту...';
+  search.addEventListener('input', (e) => {
+    loadProductList(e.target.value); // Пошук в реальному часі
+  });
+  container.appendChild(search);
+
+  // Отримання з бекенду
+  const url = new URL('https://kbzhv-miniapp-backend.vercel.app/api/products');
+  if (query) url.searchParams.set('search', query);
+  const res = await fetch(url);
+  const products = await res.json();
+
+  // Відображення
+  products.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'product-item';
+    item.innerHTML = `
+      <strong>${p.name}</strong><br>
+      Калорії: ${p.calories}, Б: ${p.proteins}, Ж: ${p.fats}, В: ${p.carbs}
+      <button class="addFromList">Додати</button>
+    `;
+    item.querySelector('button').addEventListener('click', () => {
+      updateTotals(p);
+      updateProgressBars();
+    });
+    container.appendChild(item);
+  });
+}
