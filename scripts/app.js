@@ -1,16 +1,5 @@
+// restored app.js
 
-// Спрощена ініціалізація + продукти
-document.addEventListener('DOMContentLoaded', () => {
-  setupEventListeners();
-});
-
-function setupEventListeners() {
-  document.getElementById('fromList').addEventListener('click', () => {
-    const el = document.getElementById('productListView');
-    el.classList.toggle('hidden');
-    loadProductList();
-  });
-}
 
 async function loadProductList(query = '') {
   const url = new URL('https://kbzhv-miniapp-backend.vercel.app/api/products');
@@ -45,10 +34,27 @@ function renderProductList(products) {
     `;
     const btn = item.querySelector('.addFromList');
     btn.addEventListener('click', () => {
-      console.log('Додано продукт до КБЖВ:', p.name);
+      const today = new Date().toISOString().split('T')[0];
+      const entry = {
+        userId: 'user1',
+        date: today,
+        calories: p.calories,
+        proteins: p.proteins,
+        fats: p.fats,
+        carbs: p.carbs
+      };
+      addKbzhvEntry(entry);
+      updateTotals(entry);
+      updateProgressBars();
     });
     list.appendChild(item);
   });
 
   container.appendChild(list);
 }
+
+document.getElementById('fromList').addEventListener('click', () => {
+  const el = document.getElementById('productListView');
+  el.classList.toggle('hidden');
+  loadProductList();
+});
