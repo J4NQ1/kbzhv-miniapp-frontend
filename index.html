@@ -1,84 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>КБЖВ Калькулятор</title>
-    <link rel="stylesheet" href="styles/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>КБЖВ Калькулятор</title>
+  <link rel="stylesheet" href="styles/styles.css" />
 </head>
 <body>
-    <div id="app">
-        <header>
-            <h1>КБЖВ Калькулятор</h1>
-            <div id="date"></div>
-            <div id="userShortInfo"></div>
-        </header>
-
-        <button id="toggleSettings">⚙️</button>
-        <div id="settings" class="hidden">
-            <input type="text" id="firstName" placeholder="Ім'я">
-            <input type="text" id="lastName" placeholder="Прізвище">
-            <input type="number" id="height" placeholder="Ріст (см)">
-            <input type="number" id="weight" placeholder="Вага (кг)">
-            <input type="number" id="calorieGoal" placeholder="Норма калорій">
-            <input type="number" id="stepGoal" placeholder="Норма кроків">
-        </div>
-
-        <div class="block">
-            <div id="water-recommendation"></div>
-            <input type="number" id="waterDrankInput" placeholder="Випита вода (мл)">
-            <input type="number" id="stepsDoneInput" placeholder="Пройдено кроків за день">
-
-            <div class="progress-container">
-                <label>Калорії</label>
-                <div class="progress-bar" id="calorieProgress"><div></div></div>
-            </div>
-            <div class="progress-container">
-                <label>Вода</label>
-                <div class="progress-bar blue" id="waterProgress"><div></div></div>
-            </div>
-            <div class="progress-container">
-                <label>Кроки</label>
-                <div class="progress-bar" id="stepsProgress"><div></div></div>
-            </div>
-        </div>
-
-        <section id="add-section">
-            <button id="addButton">Додати</button>
-            <div id="addMenu" class="hidden">
-                <button id="fromList">Зі списку</button>
-                <button id="search">Пошук</button>
-                <button id="scan">Сканувати</button>
-                <button id="manual">Додати вручну</button>
-                <button id="newProduct">Додати новий продукт</button>
-            </div>
-
-            <div id="manualForm" class="hidden">
-                <input type="number" id="manualCalories" placeholder="Калорії на 100г">
-                <input type="number" id="manualProteins" placeholder="Білки на 100г">
-                <input type="number" id="manualFats" placeholder="Жири на 100г">
-                <input type="number" id="manualCarbs" placeholder="Вуглеводи на 100г">
-                <input type="number" id="manualGrams" placeholder="Грами">
-                <button id="submitManual">ОКЕЙ</button>
-            </div>
-        </section>
-
-        <section id="daily-summary" class="block">
-            <h2>КБЖВ за день</h2>
-            <div class="summary-item">Калорії: <span id="totalCalories">0</span></div>
-            <div class="summary-item">Білки: <span id="totalProteins">0</span></div>
-            <div class="summary-item">Жири: <span id="totalFats">0</span></div>
-            <div class="summary-item">Вуглеводи: <span id="totalCarbs">0</span></div>
-        </section>
-
-        <button id="toggleStats">📊 Статистика</button>
-        <section id="history-buttons" class="hidden">
-            <button id="byDay">По днях</button>
-            <button id="byWeek">По тижнях</button>
-            <button id="byMonth">За місяць</button>
-            <button id="export">Експорт в .xlsx</button>
-        </section>
-    </div>
-    <script src="scripts/app.js"></script>
+  <div id="app">
+    <h1>КБЖВ Калькулятор</h1>
+    <button id="fromList">Зі списку</button>
+    <div id="productListView" class="hidden block"></div>
+  </div>
+  <script src="scripts/app.js" defer></script>
 </body>
 </html>
