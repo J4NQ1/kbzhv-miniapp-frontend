@@ -8,11 +8,9 @@
 </head>
 <body>
   <div id="app">
-    <header>
-      <h1>КБЖВ Калькулятор</h1>
-      <div id="date"></div>
-      <div id="userShortInfo"></div>
-    </header>
+    <h1>КБЖВ Калькулятор</h1>
+    <div id="date"></div>
+    <div id="userShortInfo"></div>
 
     <button id="toggleSettings">⚙️</button>
     <div id="settings" class="hidden">
@@ -46,10 +44,7 @@
       <button id="addButton">Додати</button>
       <div id="addMenu" class="hidden">
         <button id="fromList">Зі списку</button>
-        <button id="search">Пошук</button>
-        <button id="scan">Сканувати</button>
         <button id="manual">Додати вручну</button>
-        <button id="newProduct">Додати новий продукт</button>
       </div>
 
       <div id="manualForm" class="hidden">
@@ -73,13 +68,9 @@
     <button id="toggleStats">📊 Статистика</button>
     <section id="history-buttons" class="hidden">
       <button id="byDay">По днях</button>
-      <button id="byWeek">По тижнях</button>
-      <button id="byMonth">За місяць</button>
-      <button id="export">Експорт в .xlsx</button>
     </section>
 
     <div id="productListView" class="hidden block"></div>
-    <div id="history-view" class="block"></div>
   </div>
 
   <script src="scripts/app.js" defer></script>
