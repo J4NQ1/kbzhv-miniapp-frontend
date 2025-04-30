@@ -123,3 +123,15 @@ async function loadProductList(query = '') {
     container.appendChild(item);
   });
 }
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+
+app.use(cors()); // ⬅️ дозволяє CORS
+app.use(express.json());
+
+const productsRoute = require('./routes/products');
+app.use('/api/products', productsRoute);
+
+app.listen(process.env.PORT || 3000);
